@@ -9,10 +9,24 @@ namespace TestAPI
     {
         static void Main(string[] args)
         {
-            //var ApiKey = "32e7ef7473524a64fee2f7f42b66389d";
-            //var City = "Kazan";
-            var url = $"http://api.icndb.com/jokes/random/3";
+            while(true)
+            {
+                Console.WriteLine("Press 'J' for one more joke with Chuck Norris!");
+                char answer = Console.ReadKey(true).KeyChar;
+                answer = Char.ToUpper(answer);
+                if (answer == 'J')
+                {
+                    Console.WriteLine("-------------------------------------------------");
+                    string joke = RequestJoke();
+                    string sVoid = "    ";
+                    Console.WriteLine(sVoid + joke);
+                }
+            }
+        }
 
+        static public string RequestJoke()
+        {
+            var url = $"http://api.icndb.com/jokes/random/3";
             var request = WebRequest.Create(url);
 
             var response = request.GetResponse();
@@ -21,18 +35,14 @@ namespace TestAPI
             if (httpStatusCode != HttpStatusCode.OK)
             {
                 Console.WriteLine(httpStatusCode);
-                return;
             }
 
             using (var streamReader = new StreamReader(response.GetResponseStream()))
             {
                 string result = streamReader.ReadToEnd();
-                //Console.WriteLine(result);
-                var weatherForecast = JsonConvert.DeserializeObject<Root>(result);
-                Console.WriteLine(weatherForecast.value[0].joke);
-                Console.ReadLine();
+                var jokeValue = JsonConvert.DeserializeObject<Root>(result);
+                return(jokeValue.value[0].joke);
             }
-
         }
     }
 }
