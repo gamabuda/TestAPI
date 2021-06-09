@@ -14,12 +14,13 @@ namespace TestAPI
                 Console.WriteLine("Press 'J' for one more joke with Chuck Norris!");
                 char answer = Console.ReadKey(true).KeyChar;
                 answer = Char.ToUpper(answer);
-                if (answer == 'J')
+                if (answer == 'J'|| answer == 'О')
                 {
                     Console.WriteLine("-------------------------------------------------");
                     string joke = RequestJoke();
                     string sVoid = "    ";
                     Console.WriteLine(sVoid + joke);
+                    Console.WriteLine("-------------------------------------------------");
                 }
             }
         }
