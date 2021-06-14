@@ -9,9 +9,10 @@ namespace TestAPI
     {
         static void Main(string[] args)
         {
-            while(true)
+            while (true)
             {
                 Console.WriteLine("Press 'J' for one more joke with Chuck Norris!");
+                Console.WriteLine("Press 'X' to exit.");
                 char answer = Console.ReadKey(true).KeyChar;
                 answer = Char.ToUpper(answer);
                 if (answer == 'J'|| answer == 'О')
@@ -22,12 +23,16 @@ namespace TestAPI
                     Console.WriteLine(sVoid + joke);
                     Console.WriteLine("-------------------------------------------------");
                 }
+                else if (answer == 'X' || answer == 'Ч')
+                {
+                    return;
+                }    
             }
         }
 
         static public string RequestJoke()
         {
-            var url = $"http://api.icndb.com/jokes/random/3";
+            var url = $"http://api.icndb.com/jokes/random/1";
             var request = WebRequest.Create(url);
 
             var response = request.GetResponse();
