@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Telegram.Bot;
 using System.Net;
 using Newtonsoft.Json;
 
@@ -9,24 +10,19 @@ namespace TestAPI
     {
         static void Main(string[] args)
         {
-            while (true)
             {
-                Console.WriteLine("Press 'J' for one more joke with Chuck Norris!");
-                Console.WriteLine("Press 'X' to exit.");
-                char answer = Console.ReadKey(true).KeyChar;
-                answer = Char.ToUpper(answer);
-                if (answer == 'J'|| answer == 'О')
+
+                TelegramBotClient bot = new TelegramBotClient("1866845271:AAHP8bEK_weBqQ-Mji8iKTit1lRaZBHfdvU");
+
+                bot.OnMessage += (s, arg) =>
                 {
-                    Console.WriteLine("-------------------------------------------------");
-                    string joke = RequestJoke();
-                    string sVoid = "    ";
-                    Console.WriteLine(sVoid + joke);
-                    Console.WriteLine("-------------------------------------------------");
-                }
-                else if (answer == 'X' || answer == 'Ч')
-                {
-                    return;
-                }    
+                    Console.WriteLine($"{arg.Message.Chat.FirstName}: {arg.Message.Text}");
+                    bot.SendTextMessageAsync(arg.Message.Chat.Id, RequestJoke());
+                };
+
+                bot.StartReceiving();
+
+                Console.ReadKey();
             }
         }
 
